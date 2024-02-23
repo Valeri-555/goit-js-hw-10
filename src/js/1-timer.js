@@ -45,6 +45,7 @@ function startTimer() {
   timerRunning = true;
   countdownInterval = setInterval(updateTimer, 1000, userSelectedDate);
   startBtn.disabled = true; 
+  dataInput.setAttribute('disabled', 'disabled'); 
 };
 
 function updateTimer(endDate) {
@@ -53,10 +54,10 @@ function updateTimer(endDate) {
   const { days, hours, minutes, seconds } = convertMs(remainingTime);
 
   if (!isNaN(days) && !isNaN(hours) && !isNaN(minutes) && !isNaN(seconds)) {
-    dataDays.textContent = addLeadingZero(days);
-    dataHours.textContent = addLeadingZero(hours);
-    dataMinutes.textContent = addLeadingZero(minutes);
-    dataSeconds.textContent = addLeadingZero(seconds);
+    dataDays.textContent = formatTime(days);
+    dataHours.textContent = formatTime(hours);
+    dataMinutes.textContent = formatTime(minutes);
+    dataSeconds.textContent = formatTime(seconds);
   }
 
   if (remainingTime <= 0) {
@@ -82,10 +83,11 @@ function stopTimer() {
     countdownInterval = null;
     timerRunning = false;
     startBtn.disabled = false; 
+    dataInput.removeAttribute('disabled');
   }
 };
 
-function addLeadingZero(value) {
+function formatTime(value) {
   return String(value).padStart(2, '0');
 };
 
